@@ -6,16 +6,35 @@ namespace artzavod
 {
     abstract class Detal
     {
+        public int Price { get; }
+        public Detal(int price)
+        {
+            Price = price;
+        }
     }
 
-    class Engine : Detal { }
+    class Engine : Detal { 
+        public Engine(int price)
+            : base(price)
+        { }
+    }
 
 
-    class Wheel : Detal { }
+    class Wheel : Detal
+    {
+        public Wheel(int price) : base(price)
+        {
+        }
+    }
 
     interface ICommand
     {
         void Act();
+    }
+
+    class Car
+    {
+        public int Wheels { get; set; }
     }
 
     class Command : ICommand
@@ -43,7 +62,16 @@ namespace artzavod
 
         protected override void InternalAct()
         {
-            zavod.Add(Detal);
+            var key = Program.Rnd.Next(0, 2);
+
+            Detal detal = null;
+
+            if (key == 0)
+                detal = new Wheel(100);
+            else if (key == 1)
+                detal = new Engine(1500);
+
+            zavod.Add(detal);
             zavod.ShowState();
         }
     }

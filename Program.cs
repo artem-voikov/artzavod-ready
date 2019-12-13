@@ -5,14 +5,16 @@ namespace artzavod
 {
     class Program
     {
+        public static Random Rnd = new Random();
         static void Main(string[] args)
         {
             var zavod = new Zavod();
-            zavod.Add(new Wheel());
+
+            
 
             var commands = new Dictionary<ConsoleKey, Command>
             {
-                [ConsoleKey.Spacebar] = new CreateWheelCommand(zavod) { Detal = new Wheel() } 
+                [ConsoleKey.Spacebar] = new CreateWheelCommand(zavod) 
             };
 
             var undone = true;
