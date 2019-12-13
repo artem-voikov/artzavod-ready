@@ -32,9 +32,12 @@ namespace artzavod
         void Act();
     }
 
-    class Car
+    class CommandSimulator : ICommand
     {
-        public int Wheels { get; set; }
+        public void Act()
+        {
+            Console.WriteLine("Command triggered");
+        }
     }
 
     class Command : ICommand
@@ -46,7 +49,6 @@ namespace artzavod
 
         protected virtual void InternalAct()
         {
-
         }
     }
 

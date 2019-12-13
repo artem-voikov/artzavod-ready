@@ -10,11 +10,12 @@ namespace artzavod
         {
             var zavod = new Zavod();
 
-            
 
-            var commands = new Dictionary<ConsoleKey, Command>
+
+            var commands = new Dictionary<ConsoleKey, ICommand>
             {
-                [ConsoleKey.Spacebar] = new CreateWheelCommand(zavod) 
+                [ConsoleKey.Spacebar] = new CreateWheelCommand(zavod),
+                [ConsoleKey.Enter] = new CommandSimulator()
             };
 
             var undone = true;

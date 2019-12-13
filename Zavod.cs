@@ -15,6 +15,10 @@ namespace artzavod
             if (detal == null)
                 throw new ArgumentNullException("detail");
 
+            if (detal.Price == 0)
+                return;
+
+          
 
             if(detal is Wheel wheel && wheels.Count < 4)
             {
