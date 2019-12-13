@@ -4,12 +4,8 @@ using System.Text;
 
 namespace artzavod
 {
-    abstract class Detal
+    class Car
     {
+        public int Wheels { get; set; }
     }
-
-    class Engine : Detal { }
-
-
-    class Wheel : Detal { }
 }
