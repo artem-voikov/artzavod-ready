@@ -1,14 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace artzavod
 {
     class Zavod
     {
-        private List<Wheel> wheels = new List<Wheel>();
-        private List<Engine> engines = new List<Engine>();
-        private int prosraliCounter = 0;
+        private List<Car> cars = new List<Car>();
+        private Storage storage = new Storage();
+
+        public Zavod()
+        {
+            cars.Add(new Car());
+        }
 
         public void Add(Detal detal)
         {
@@ -18,35 +23,35 @@ namespace artzavod
             if (detal.Price == 0)
                 return;
 
-          
-
-            if(detal is Wheel wheel && wheels.Count < 4)
+            foreach (var c in cars)
             {
-                wheels.Add(wheel);
-            } else if (detal is Engine engine && engines.Count < 2)
-            {
-                engines.Add(engine);
-            }
-            else
-            {
-                this.prosraliCounter += detal.Price;
+                var isDone = c.AddDetal(detal);
+                if (isDone)
+                {
+                    return;
+                }
             }
 
+            if (storage.AddDetal(detal))
+                return;
+
+            var detals = storage.ReleaseStorage(detal);
+
+            //cars.Add(new Car().PutDetal(detals.ToArray()));
+
+            var aNewCar = new Car();
+            aNewCar.PutDetal(detals.ToArray());
+            cars.Add(aNewCar);
         }
 
         public void ShowState()
         {
-            if (wheels.Count == 4 && engines.Count == 2)
+            Console.Clear();
+            for (int i = 0; i < cars.Count; i++)
             {
-                Console.WriteLine($"Car is done, poterali: {prosraliCounter}");
-                wheels.Clear(); 
-                engines.Clear();
+                Console.WriteLine($" [{i+1}] - {cars[i]}");
             }
-            else
-            {
-                Console.WriteLine($"Wheels: {wheels.Count}, Engines: {engines.Count}");
-            }
-            
+                
         }
     }
 }

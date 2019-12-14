@@ -10,8 +10,6 @@ namespace artzavod
         {
             var zavod = new Zavod();
 
-
-
             var commands = new Dictionary<ConsoleKey, ICommand>
             {
                 [ConsoleKey.Spacebar] = new CreateWheelCommand(zavod),

@@ -19,10 +19,23 @@ namespace artzavod
         { }
     }
 
-
     class Wheel : Detal
     {
         public Wheel(int price) : base(price)
+        {
+        }
+    }
+
+    class SteeringWheel : Detal
+    {
+        public SteeringWheel(int price) : base(price)
+        {
+        }
+    }
+
+    class Sit : Detal
+    {
+        public Sit(int price) : base(price)
         {
         }
     }
@@ -64,14 +77,18 @@ namespace artzavod
 
         protected override void InternalAct()
         {
-            var key = Program.Rnd.Next(0, 2);
+            var key = Program.Rnd.Next(0, 4);
 
             Detal detal = null;
 
             if (key == 0)
-                detal = new Wheel(100);
+                detal = new Wheel(250);
             else if (key == 1)
                 detal = new Engine(1500);
+            else if (key == 2)
+                detal = new Sit(350);
+            else if (key == 3)
+                detal = new SteeringWheel(150);
 
             zavod.Add(detal);
             zavod.ShowState();
