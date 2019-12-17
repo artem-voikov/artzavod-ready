@@ -25,14 +25,15 @@ namespace artzavod
 
             foreach (var c in cars)
             {
-                var isDone = c.AddDetal(detal);
-                if (isDone)
+                bool carTookDetail = c.AddDetal(detal);
+                if (carTookDetail)
                 {
                     return;
                 }
             }
 
-            if (storage.AddDetal(detal))
+            bool storageNotFull = storage.AddDetal(detal);
+            if (storageNotFull)
                 return;
 
             var detals = storage.ReleaseStorage(detal);
@@ -49,9 +50,9 @@ namespace artzavod
             Console.Clear();
             for (int i = 0; i < cars.Count; i++)
             {
-                Console.WriteLine($" [{i+1}] - {cars[i]}");
+                Console.WriteLine($" [{i + 1}] - {cars[i]}");
             }
-                
+
         }
     }
 }
