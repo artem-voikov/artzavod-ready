@@ -6,23 +6,22 @@ namespace artzavod
 {
     class Car
     {
-        protected Dictionary<Type, List<Detal>> details;
+        //protected Dictionary<Type, List<Detal>> details;
+
+        protected List<Detal> wheels = new List<Detal>(4);
+        protected List<Detal> engines = new List<Detal>(2);
+        protected List<Detal> steeringWheels = new List<Detal>(1);
+        protected List<Detal> sits = new List<Detal>(2);
 
         public Car()
-        {
-            details = new Dictionary<Type, List<Detal>>
-            {
-                [typeof(Wheel)] = new List<Detal>(4),
-                [typeof(Engine)] = new List<Detal>(2),
-                [typeof(SteeringWheel)] = new List<Detal>(1),
-                [typeof(Sit)] = new List<Detal>(2)
-            };
-        }
+        { }
 
         public bool AddDetal(Detal detal)
         {
             var type = detal.GetType();
-            var list = details[type];
+            var list = GetListByType(detal);
+            if (list == null)
+                throw new ArgumentException("wut?");
 
             if (list.Count >= list.Capacity)
                 return false;
@@ -31,9 +30,26 @@ namespace artzavod
             return true;
         }
 
+        protected List<Detal> GetListByType(Detal detal)
+        {
+            switch(detal)
+            {
+                case SteeringWheel sw:
+                    return steeringWheels;
+                case Sit sit:
+                    return sits;
+                case Engine e:
+                    return engines;
+                case Wheel w:
+                    return wheels;
+            }
+
+            return null;
+        }
+
         public Car PutDetal(params Detal[] detals)
         {
-            var list = this.details[detals[0].GetType()];
+            var list = GetListByType(detals[0]);
             list.AddRange(detals);
 
             return this;
@@ -51,17 +67,19 @@ namespace artzavod
             price = 0;
             double partsCount = 0;
             double partsTotal = 0;
+            var allDetailsLists = new List<Detal>[] { wheels, sits, steeringWheels, engines };
 
-            foreach (var pair in details)
+            foreach (var list in allDetailsLists)
             {
-                foreach (var detail in pair.Value)
+                foreach (var detail in list)
                     price += detail.Price;
 
-                partsCount += pair.Value.Count;
-                partsTotal += pair.Value.Capacity;
+                partsCount += list.Count;
+                partsTotal += list.Capacity;
             }
 
             var result = Math.Round(100 / partsTotal * partsCount);
+
             return result;
         }
     }
